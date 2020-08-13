@@ -3,10 +3,9 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,django
 
 ### myApp ###
-staticfiles/
-.env
 logs/
 files/
+extract/settings.py
 
 ### Django ###
 *.log
