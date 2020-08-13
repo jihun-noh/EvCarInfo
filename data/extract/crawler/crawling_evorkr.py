@@ -3,7 +3,7 @@ from selenium import webdriver
 from bs4 import BeautifulSoup
 from pandas import DataFrame
 
-driver = webdriver.Chrome('chromedriver.exe')
+driver = webdriver.Chrome('../../files/chromedriver.exe')
 driver.get('https://www.ev.or.kr/portal/buyersGuide/incenTive?pMENUMST_ID=21549')
 driver.implicitly_wait(3)
 html = driver.page_source
@@ -36,5 +36,4 @@ for tag in soup.select('table.table_02_2_1 tbody > tr'):
     )
 
 data = DataFrame(purchase_support)
-print(data)
-data.to_csv('../../csv/evorkr_{}.csv'.format(time.time()), mode='w')
+data.to_csv('../../files/csv/evorkr_{}.csv'.format(time.time()), mode='w')

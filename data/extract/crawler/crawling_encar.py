@@ -3,7 +3,7 @@ from selenium import webdriver
 from bs4 import BeautifulSoup
 from pandas import DataFrame
 
-driver = webdriver.Chrome('chromedriver.exe')
+driver = webdriver.Chrome('../../files/chromedriver.exe')
 driver.get('http://www.encar.com/ev/ev_carsearchlist.do?carType=ev&searchType=model&TG.R=D#!{"action":"(And.Hidden.N._.CarType.A._.(C.GreenType.Y._.EvType.전기차.)_.FuelType.전기.)","toggle":{},"layer":"","sort":"ModifiedDate","page":1,"limit":20}')
 driver.implicitly_wait(3)
 html = driver.page_source
@@ -31,5 +31,4 @@ for car in zip(manufacturer, model, trim, year, km, location):
     )
 
 data = DataFrame(old_cars)
-print(data)
-data.to_csv('../../csv/encar_{}.csv'.format(time.time()), mode='w')
+data.to_csv('../../files/csv/encar_{}.csv'.format(time.time()), mode='w')
