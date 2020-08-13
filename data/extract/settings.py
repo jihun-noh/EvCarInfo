@@ -1,6 +1,10 @@
+import json
+
+with open('config.json', 'r') as f:
+    config = json.load(f)
+
+# Third Party Api settings
+data_go_kr_sercret_key = config['THIRD_PARTY_API']['DATA_GO_KR']['SERVICE_KEY']
 
 # Crawler settings
-webdriver = '../../files/chromedriver.exe'
-
-# Third Party API settings
-data_go_kr_service_key = 'Y+/SRLxywx+qT3Eg1rgF/aWo9bbc613Ys3gkSSkjXMnHSrCXP+gzQt5CeKrVW+sFHlOdxURtR6YcKVQxZr7OyQ=='
+webdriver = config['CRAWLING']['SELENIUM']['WEB_DRIVER']

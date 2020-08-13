@@ -5,7 +5,7 @@
 ### myApp ###
 logs/
 files/
-extract/settings.py
+config.json
 
 ### Django ###
 *.log
