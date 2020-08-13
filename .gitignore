@@ -6,8 +6,7 @@
 staticfiles/
 .env
 logs/
-*.csv
-chromedriver.exe
+files/
 
 ### Django ###
 *.log
