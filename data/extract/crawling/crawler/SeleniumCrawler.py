@@ -14,7 +14,7 @@ class SeleniumCrawler():
     def set_crawler(self):
         driver = webdriver.Chrome(self.webdriver)
         driver.get(self.url)
-        driver.implicitly_wait(3)
+        driver.implicitly_wait(5)
         self.html = driver.page_source
         driver.quit()
 
