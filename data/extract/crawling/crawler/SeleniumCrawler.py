@@ -1,4 +1,5 @@
 import sys
+import os
 import time
 from selenium import webdriver
 from pandas import DataFrame
@@ -23,4 +24,5 @@ class SeleniumCrawler():
         self.dataframe = DataFrame(data)
 
     def save_to_csv(self, filename):
-        self.dataframe.to_csv('../../files/csv/{}_{}.csv'.format(filename, time.time()), mode='w')
+        save_file = os.path.join(settings.output_csv_dir, '{}_{}.csv'.format(filename, time.time()))
+        self.dataframe.to_csv(save_file, mode='w')

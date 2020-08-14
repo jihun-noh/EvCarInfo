@@ -1,6 +1,10 @@
+import os
+import sys
 import time
 import xml.etree.ElementTree as ET
 from apis import DataGoKr
+sys.path.append('..')
+import settings
 
 datagokr = DataGoKr()
 res = datagokr.get_charging_station(1, 5, '')
@@ -15,4 +19,5 @@ if result_code != '00':
     raise Exception('result_code error [{}][{}]'.format(result_code, result_msg))
 
 tree = ET.ElementTree(root)
-tree.write('../../files/xml/charging_station_{}.xml'.format(time.time()))
+save_file = os.path.join(settings.output_xml_dir, 'charging_station_{}.xml'.format(time.time()))
+tree.write(save_file)
