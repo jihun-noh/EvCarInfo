@@ -12,6 +12,10 @@ input_dir = os.path.join(base_dir, config['COMMON']['DIR']['INPUT'])
 output_csv_dir = os.path.join(base_dir, config['COMMON']['DIR']['OUTPUT']['CSV'])
 output_xml_dir = os.path.join(base_dir, config['COMMON']['DIR']['OUTPUT']['XML'])
 
+# DB
+redis_host = config['COMMON']['DB']['REDIS']['HOST']
+redis_port = config['COMMON']['DB']['REDIS']['PORT']
+
 # Third Party Api settings
 data_go_kr_service_key = config['THIRD_PARTY_API']['DATA_GO_KR']['SERVICE_KEY']
 
