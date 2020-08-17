@@ -21,4 +21,5 @@ def registration_status(filename):
     df_diesel.to_csv(os.path.join(settings.output_csv_dir, year_month + '_registration_diesel.csv'), mode='w')
     df_electric.to_csv(os.path.join(settings.output_csv_dir, year_month + '_registration_electric.csv'), mode='w')
 
-registration_status(os.path.join(settings.input_xls_dir, '2020_07_car_registration.xlsx'))
+for file in os.listdir(settings.input_dir):
+    registration_status(os.path.join(settings.input_dir, file))

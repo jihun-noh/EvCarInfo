@@ -8,7 +8,7 @@ with open(config_file, 'r') as f:
 
 # Common
 base_dir = config['COMMON']['DIR']['BASE']
-input_xls_dir = os.path.join(base_dir, config['COMMON']['DIR']['INPUT']['XLS'])
+input_dir = os.path.join(base_dir, config['COMMON']['DIR']['INPUT'])
 output_csv_dir = os.path.join(base_dir, config['COMMON']['DIR']['OUTPUT']['CSV'])
 output_xml_dir = os.path.join(base_dir, config['COMMON']['DIR']['OUTPUT']['XML'])
 
