@@ -49,5 +49,5 @@ sc.crawling()
 #sc.save_to_csv('encar')
 json_data = sc.dataframe.to_json(orient='records', force_ascii=False)
 
-r = redis_module.RedisModule(settings.redis_host, settings.redis_port, 0)
+r = redis_module.RedisModule()
 r.set('old_cars', json_data)
