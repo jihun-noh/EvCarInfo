@@ -1,6 +1,6 @@
 import time
 from bs4 import BeautifulSoup
-from crawler import SeleniumCrawler
+from crawler import selenium_crawler
 
 def scrapping(html):
     soup = BeautifulSoup(html, 'html.parser')
@@ -32,7 +32,7 @@ def scrapping(html):
     return purchase_support
 
 url = 'https://www.ev.or.kr/portal/buyersGuide/incenTive?pMENUMST_ID=21549'
-sc = SeleniumCrawler.SeleniumCrawler(url, scrapping)
+sc = selenium_crawler.SeleniumCrawler(url, scrapping)
 sc.set_crawler()
 sc.crawling()
 sc.save_to_csv('evorkr')

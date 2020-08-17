@@ -1,6 +1,6 @@
 import time
 from bs4 import BeautifulSoup
-from crawler import SeleniumCrawler
+from crawler import selenium_crawler
 
 def scrapping(html):
     soup = BeautifulSoup(html, 'html.parser')
@@ -24,9 +24,9 @@ def scrapping(html):
             }
         )
     return old_cars
-    
+
 url = 'http://www.encar.com/ev/ev_carsearchlist.do?carType=ev&searchType=model&TG.R=D#!{"action":"(And.Hidden.N._.CarType.A._.(C.GreenType.Y._.EvType.전기차.)_.FuelType.전기.)","toggle":{},"layer":"","sort":"ModifiedDate","page":1,"limit":20}'
-sc = SeleniumCrawler.SeleniumCrawler(url, scrapping)
+sc = selenium_crawler.SeleniumCrawler(url, scrapping)
 sc.set_crawler()
 sc.crawling()
 sc.save_to_csv('encar')
