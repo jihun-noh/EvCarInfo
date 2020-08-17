@@ -22,4 +22,5 @@ def registration_status(filename):
     df_electric.to_csv(os.path.join(settings.output_csv_dir, year_month + '_registration_electric.csv'), mode='w')
 
 for file in os.listdir(settings.input_dir):
-    registration_status(os.path.join(settings.input_dir, file))
+    if '자동차_등록자료_통계' in file:
+        registration_status(os.path.join(settings.input_dir, file))
