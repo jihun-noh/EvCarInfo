@@ -1,6 +1,11 @@
+import sys
 import time
 from bs4 import BeautifulSoup
 from crawler import selenium_crawler
+sys.path.append('..')
+import settings
+sys.path.append(settings.base_dir)
+from data.db import redis_module
 
 def scrapping(html):
     soup = BeautifulSoup(html, 'html.parser')
@@ -25,9 +30,24 @@ def scrapping(html):
         )
     return old_cars
 
-url = 'http://www.encar.com/ev/ev_carsearchlist.do?carType=ev&searchType=model&TG.R=D#!{"action":"(And.Hidden.N._.CarType.A._.(C.GreenType.Y._.EvType.전기차.)_.FuelType.전기.)","toggle":{},"layer":"","sort":"ModifiedDate","page":1,"limit":20}'
+def get_count():
+    def count_scrapping(html):
+        soup = BeautifulSoup(html, 'html.parser')
+        count = soup.select('span.allcount > em')
+        return count
+
+    url = 'http://www.encar.com/ev/ev_carsearchlist.do?carType=ev&searchType=model&TG.R=D#!{"action":"(And.Hidden.N._.CarType.A._.(C.GreenType.Y._.EvType.전기차.)_.FuelType.전기.)","toggle":{},"layer":"","sort":"ModifiedDate","page":1,"limit":1}'
+    sc = selenium_crawler.SeleniumCrawler(url, count_scrapping)
+    sc.set_crawler()
+    return sc.crawling()[0][0]
+
+count = get_count()
+url = 'http://www.encar.com/ev/ev_carsearchlist.do?carType=ev&searchType=model&TG.R=D#!{"action":"(And.Hidden.N._.CarType.A._.(C.GreenType.Y._.EvType.전기차.)_.FuelType.전기.)","toggle":{},"layer":"","sort":"ModifiedDate","page":1,"limit":' + count + '}'
 sc = selenium_crawler.SeleniumCrawler(url, scrapping)
 sc.set_crawler()
 sc.crawling()
-sc.save_to_csv('encar')
-print(sc.dataframe)
+#sc.save_to_csv('encar')
+json_data = sc.dataframe.to_json(orient='records', force_ascii=False)
+
+r = redis_module.RedisModule(settings.redis_host, settings.redis_port, 0)
+r.set('old_cars', json_data)
