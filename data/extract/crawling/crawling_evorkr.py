@@ -19,19 +19,19 @@ def scrapping(html):
         elif td_len == 4:
             manufacturer = td[1].contents[0]
             model = td[2].contents[0]
-            amount = td[3].contents[0]
+            support_amount = td[3].contents[0]
         elif td_len == 3:
             manufacturer = td[0].contents[0]
             model = td[1].contents[0]
-            amount = td[2].contents[0]
+            support_amount = td[2].contents[0]
         elif td_len == 2:
             model = td[0].contents[0]
-            amount = td[1].contents[0]
+            support_amount = td[1].contents[0]
         purchase_support.append(
             {
                 'manufacturer' : manufacturer,
                 'model' : model,
-                'amount' : amount
+                'support_amount' : support_amount
             }
         )
     return purchase_support
