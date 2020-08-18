@@ -46,9 +46,9 @@ url = 'http://www.encar.com/ev/ev_carsearchlist.do?carType=ev&searchType=model&T
 sc = selenium_crawler.SeleniumCrawler(url, scrapping)
 sc.set_crawler()
 sc.crawling()
-#sc.save_to_csv('encar')
 json_data = sc.dataframe.to_json(orient='records', force_ascii=False)
 
 r = redis_module.RedisModule()
-if r.set('old_cars', json_data):
-    print('Redis saved key [{}]'.format('old_cars'))
+key = 'encar'
+if r.set(key, json_data):
+    print('Redis saved key [{}]'.format(key))

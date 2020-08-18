@@ -40,10 +40,9 @@ url = 'https://www.ev.or.kr/portal/buyersGuide/incenTive?pMENUMST_ID=21549'
 sc = selenium_crawler.SeleniumCrawler(url, scrapping)
 sc.set_crawler()
 sc.crawling()
-#sc.save_to_csv('evorkr')
-
 json_data = sc.dataframe.to_json(orient='records', force_ascii=False)
 
 r = redis_module.RedisModule()
-if r.set('evorkr', json_data):
-    print('Redis saved key [{}]'.format('evorkr'))
+key = 'evorkr'
+if r.set(key, json_data):
+    print('Redis saved key [{}]'.format(key))
