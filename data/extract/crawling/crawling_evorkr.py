@@ -1,6 +1,11 @@
+import sys
 import time
 from bs4 import BeautifulSoup
+sys.path.append('../..')
+import settings
+sys.path.append(settings.BASE_DIR)
 from crawler import selenium_crawler
+from data.db import redis_module
 
 def scrapping(html):
     soup = BeautifulSoup(html, 'html.parser')
@@ -35,5 +40,10 @@ url = 'https://www.ev.or.kr/portal/buyersGuide/incenTive?pMENUMST_ID=21549'
 sc = selenium_crawler.SeleniumCrawler(url, scrapping)
 sc.set_crawler()
 sc.crawling()
-sc.save_to_csv('evorkr')
-print(sc.dataframe)
+#sc.save_to_csv('evorkr')
+
+json_data = sc.dataframe.to_json(orient='records', force_ascii=False)
+
+r = redis_module.RedisModule()
+if r.set('evorkr', json_data):
+    print('Redis saved key [{}]'.format('evorkr'))

@@ -1,10 +1,10 @@
 import sys
 import time
 from bs4 import BeautifulSoup
-from crawler import selenium_crawler
-sys.path.append('..')
+sys.path.append('../..')
 import settings
-sys.path.append(settings.base_dir)
+sys.path.append(settings.BASE_DIR)
+from crawler import selenium_crawler
 from data.db import redis_module
 
 def scrapping(html):
@@ -50,4 +50,5 @@ sc.crawling()
 json_data = sc.dataframe.to_json(orient='records', force_ascii=False)
 
 r = redis_module.RedisModule()
-r.set('old_cars', json_data)
+if r.set('old_cars', json_data):
+    print('Redis saved key [{}]'.format('old_cars'))

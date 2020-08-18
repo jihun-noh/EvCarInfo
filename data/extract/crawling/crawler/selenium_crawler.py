@@ -3,14 +3,13 @@ import os
 import time
 from selenium import webdriver
 from pandas import DataFrame
-sys.path.append('..')
 import settings
 
 class SeleniumCrawler():
     WAIT_TIME = 20
 
     def __init__(self, url, scrapping):
-        self.webdriver = settings.webdriver
+        self.webdriver = settings.WEBDRIVER
         self.url = url
         self.scrapping = scrapping
 
@@ -27,5 +26,5 @@ class SeleniumCrawler():
         return self.dataframe
 
     def save_to_csv(self, filename):
-        save_file = os.path.join(settings.output_csv_dir, '{}_{}.csv'.format(filename, time.time()))
+        save_file = os.path.join(settings.OUTPUT_CSV_DIR, '{}_{}.csv'.format(filename, time.time()))
         self.dataframe.to_csv(save_file, mode='w')
