@@ -12,3 +12,6 @@ class RedisModule():
 
     def get(self, key):
         return self.r.get(key)
+
+    def keys(self, pattern):
+        return self.r.keys(pattern)
