@@ -15,3 +15,6 @@ class RedisModule():
 
     def keys(self, pattern):
         return self.r.keys(pattern)
+
+    def delete(self, key):
+        return self.r.delete(key)
