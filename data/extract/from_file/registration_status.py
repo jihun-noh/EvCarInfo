@@ -25,13 +25,12 @@ def registration_status_fuel(filename):
     total_diesel = df_diesel.loc[36][20]
     total_electric = df_electric.loc[87][20]
 
-    key = '{}_total_reg_status_fuel'.format(year_month)
+    key = 'extract_reg_status_fuel_{}'.format(year_month)
     value = json.dumps({
         'gasoline' : total_gasoline,
         'diesel' : total_diesel,
         'electric' : total_electric
     })
-    print(key, value)
     r = redis_module.RedisModule()
     if r.set(key, value):
         print('Redis saved key [{}]'.format(key))

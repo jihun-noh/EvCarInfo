@@ -43,6 +43,6 @@ sc.crawling()
 json_data = sc.dataframe.to_json(orient='records', force_ascii=False)
 
 r = redis_module.RedisModule()
-key = 'evorkr'
+key = 'extract_evorkr'
 if r.set(key, json_data):
     print('Redis saved key [{}]'.format(key))

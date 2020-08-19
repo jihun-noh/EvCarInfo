@@ -49,6 +49,6 @@ sc.crawling()
 json_data = sc.dataframe.to_json(orient='records', force_ascii=False)
 
 r = redis_module.RedisModule()
-key = 'encar'
+key = 'extract_encar'
 if r.set(key, json_data):
     print('Redis saved key [{}]'.format(key))
