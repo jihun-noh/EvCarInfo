@@ -1,7 +1,5 @@
 import sys
 sys.path.append('..')
-import settings
-sys.path.append(settings.BASE_DIR)
 
 class Standard():
     manufacturer = [
@@ -91,6 +89,3 @@ class Transformer():
                 for m in st_model:
                     if m in old_model:
                         return old_model.replace(m, '').strip()
-
-    def regstatus(self):
-        pass

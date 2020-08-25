@@ -4,10 +4,10 @@ sys.path.append('..')
 import settings
 sys.path.append(settings.BASE_DIR)
 from data.db import redis_module
-from transformer import evcar_transformer
+from transformer import car_transformer
 
 def encar(extract_json_data):
-    tf = evcar_transformer.Transformer()
+    tf = car_transformer.Transformer()
     extract_dict_data = json.loads(extract_json_data)
     new_data = []
     for d in extract_dict_data:
@@ -33,7 +33,7 @@ def encar(extract_json_data):
 r = redis_module.RedisModule()
 extract_json_data = r.get('extract_encar').decode('utf-8')
 transform_json_data = encar(extract_json_data)
-print(transform_json_data)
+
 key = 'transform_encar'
 if r.set(key, transform_json_data):
     print('Redis saved key [{}]'.format(key))
