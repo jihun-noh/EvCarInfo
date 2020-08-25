@@ -1,9 +1,7 @@
 import sys
-import json
 sys.path.append('..')
 import settings
 sys.path.append(settings.BASE_DIR)
-from data.db import redis_module
 
 class Standard():
     manufacturer = [
@@ -45,9 +43,9 @@ class Standard():
 
 class Transformer():
     def __init__(self):
-        self.r = redis_module.RedisModule()
+        pass
 
-    def check_exceptions(self, type, old, list, **kargs):
+    def check_exceptions(self, type, old, **kargs):
         if type == 'manufacturer':
             if old == '한불모터스':
                 if kargs['model'] in ['e-208', 'e-2008']:
@@ -56,61 +54,43 @@ class Transformer():
                     return 'DS'
             else:
                 return False
+        elif type == 'trim':
+            exceptions = ['재규어', 'Peugeot']
+            for e in exceptions:
+                if e in old:
+                    return True
+                else:
+                    continue
+            return False
         else:
             pass
 
     def transform_to_standard(self, type, old, **kargs):
         st = Standard()
-        standard = getattr(st, type)
-        for _list in standard:
+        st_type = getattr(st, type)
+        for _list in st_type:
             for _str in _list:
                 if _str in old:
-                    if type == 'model':
-                        print(old.replace(_str, ''))
-                    new = self.check_exceptions(type, old, _list, **kargs)
+                    new = self.check_exceptions(type, old, **kargs)
                     if new:
                         return new
                     else:
                         return _list[0]
         return old
 
-    def get_trim(self, model, new_model):
-        if '(' in model:
-            start_idx = model.find('(')
-            end_idx = model.find(')')
-            return model[start_idx+1:end_idx]
-        # elif 띄어쓰기:
-        #     trim =
-        # else:
-        #     trim =
-        return 'trim'
-
-    def encar(self):
-        value = self.r.get('extract_encar').decode('utf-8')
-
-    def evorkr(self):
-        json_data = self.r.get('extract_evorkr').decode('utf-8')
-        dict_data = json.loads(json_data)
-        new_data = []
-        for d in dict_data:
-            new_manufacturer = self.transform_to_standard(
-                type='manufacturer', old=d['manufacturer'], model=d['model'])
-            new_model = self.transform_to_standard(
-                type='model', old=d['model'])
-            new_trim = self.get_trim(d['model'], new_model)
-            new_dict = {
-                'manufacturer' : new_manufacturer,
-                'model' : new_model,
-                'trim' : new_trim,
-                'support_amount' : d['support_amount']
-            }
-            new_data.append(new_dict)
-        new_json_data = json.dumps(new_data, ensure_ascii=False)
-#        self.r.set('transform_evorkr', new_json_data)
-        print(new_json_data)
+    def get_trim(self, old_model, new_model):
+        if '(' in old_model:
+            start_idx = old_model.find('(')
+            end_idx = old_model.find(')')
+            return old_model[start_idx+1:end_idx].strip()
+        elif self.check_exceptions('trim', old_model):
+            return ''
+        else:
+            st_model_list = Standard().model
+            for st_model in st_model_list:
+                for m in st_model:
+                    if m in old_model:
+                        return old_model.replace(m, '').strip()
 
     def regstatus(self):
         pass
-
-tr = Transformer()
-tr.evorkr()
