@@ -31,7 +31,7 @@ def encar(extract_json_data):
     return new_json_data
 
 r = redis_module.RedisModule()
-extract_json_data = r.get('extract_encar').decode('utf-8')
+extract_json_data = r.get('extract_encar')
 transform_json_data = encar(extract_json_data)
 
 key = 'transform_encar'

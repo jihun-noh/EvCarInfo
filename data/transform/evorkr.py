@@ -27,7 +27,7 @@ def evorkr(extract_json_data):
     return new_json_data
 
 r = redis_module.RedisModule()
-extract_json_data = r.get('extract_evorkr').decode('utf-8')
+extract_json_data = r.get('extract_evorkr')
 transform_json_data = evorkr(extract_json_data)
 
 key = 'transform_evorkr'
