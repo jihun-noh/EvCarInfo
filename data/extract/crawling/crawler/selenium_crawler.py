@@ -14,7 +14,12 @@ class SeleniumCrawler():
         self.scrapping = scrapping
 
     def set_crawler(self):
-        driver = webdriver.Chrome(self.webdriver)
+        options = webdriver.ChromeOptions()
+        options.add_argument('headless')
+        options.add_argument('window-size=1920x1080')
+        options.add_argument("disable-gpu")
+        # 혹은 options.add_argument("--disable-gpu")
+        driver = webdriver.Chrome(self.webdriver, chrome_options=options)
         driver.get(self.url)
         driver.implicitly_wait(SeleniumCrawler.WAIT_TIME)
         self.html = driver.page_source
