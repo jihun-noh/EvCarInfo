@@ -18,7 +18,6 @@ class SeleniumCrawler():
         options.add_argument('headless')
         options.add_argument('window-size=1920x1080')
         options.add_argument("disable-gpu")
-        # 혹은 options.add_argument("--disable-gpu")
         driver = webdriver.Chrome(self.webdriver, chrome_options=options)
         driver.get(self.url)
         driver.implicitly_wait(SeleniumCrawler.WAIT_TIME)
