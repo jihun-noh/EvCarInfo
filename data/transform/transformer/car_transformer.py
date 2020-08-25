@@ -1,6 +1,3 @@
-import sys
-sys.path.append('..')
-
 class Standard():
     manufacturer = [
         ['현대자동차', '현대'],
@@ -39,7 +36,7 @@ class Standard():
         ['CEVO-C']
     ]
 
-class Transformer():
+class CarTransformer():
     def __init__(self):
         pass
 

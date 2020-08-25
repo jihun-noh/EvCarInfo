@@ -7,7 +7,7 @@ from data.db import redis_module
 from transformer import car_transformer
 
 def evorkr(extract_json_data):
-    tf = car_transformer.Transformer()
+    tf = car_transformer.CarTransformer()
     extract_dict_data = json.loads(extract_json_data)
     new_data = []
     for d in extract_dict_data:
