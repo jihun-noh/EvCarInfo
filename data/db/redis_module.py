@@ -1,11 +1,9 @@
 import redis
+import settings
 
 class RedisModule():
-    HOST = '54.180.99.44'
-    PORT = '6379'
-
     def __init__(self):
-        self.r = redis.Redis(host=RedisModule.HOST, port=RedisModule.PORT, db=0)
+        self.r = redis.Redis(host=settings.REDIS_HOST, port=settings.REDIS_PORT, db=0)
 
     def set(self, key, value):
         return self.r.set(key, value)
