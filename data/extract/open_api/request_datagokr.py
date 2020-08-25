@@ -1,23 +1,39 @@
 import os
 import sys
 import time
-import xml.etree.ElementTree as ET
-from apis import DataGoKr
-sys.path.append('..')
+import json
+import xmltodict
+sys.path.append('../..')
 import settings
+sys.path.append(settings.BASE_DIR)
+from apis import DataGoKr
+from data.db import redis_module
 
-datagokr = DataGoKr()
-res = datagokr.get_charging_station(1, 5, '')
+def request_charging_station(page_no, page_size):
+    datagokr = DataGoKr()
+    res = datagokr.get_charging_station(page_no, page_size)
+    if res.status_code != 200:
+        raise Exception('data.go.kr has a problem. status_code [{}]'.format(res.status_code))
 
-if res.status_code != 200:
-    raise Exception('data.go.kr has a problem. status_code [{}]'.format(res.status_code))
+    dict_data = xmltodict.parse(res.text)
+    result_code = dict_data['response']['header']['resultCode']
+    if result_code != '00':
+         result_msg = dict_data['response']['header']['resultMsg']
+         raise Exception('result_code error [{}][{}]'.format(result_code, result_msg))
 
-root = ET.fromstring(res.text)
-result_code = root.find('header').find('resultCode').text
-if result_code != '00':
-    result_msg = root.find('header').find('resultMsg').text
-    raise Exception('result_code error [{}][{}]'.format(result_code, result_msg))
+    return dict_data
 
-tree = ET.ElementTree(root)
-save_file = os.path.join(settings.output_xml_dir, 'charging_station_{}.xml'.format(time.time()))
-tree.write(save_file)
+r = redis_module.RedisModule()
+pre_dict_data = request_charging_station(1, 1)
+total_count = pre_dict_data['response']['header']['totalCount']
+total_page = int(int(total_count) / 10000) + 1
+print('total_page - [{}]'.format(total_page))
+
+for i in range(1, total_page+1):
+    print('page - [{}]'.format(i))
+    dict_data = request_charging_station(i, 10000)
+    json_data = json.dumps(dict_data, ensure_ascii=False)
+
+    key = 'extract_chargingstation_{}'.format(i)
+    if r.set(key, json_data):
+        print('Redis saved key [{}]'.format(key))
