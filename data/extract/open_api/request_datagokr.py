@@ -34,6 +34,6 @@ for i in range(1, total_page+1):
     dict_data = request_charging_station(i, 10000)
     json_data = json.dumps(dict_data, ensure_ascii=False)
 
-    key = 'extract_chargingstation_{}'.format(i)
+    key = 'extract_charging_station_{}'.format(i)
     if r.set(key, json_data):
         print('Redis saved key [{}]'.format(key))
