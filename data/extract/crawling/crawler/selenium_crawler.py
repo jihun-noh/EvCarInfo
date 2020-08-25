@@ -29,7 +29,3 @@ class SeleniumCrawler():
         data = self.scrapping(self.html)
         self.dataframe = DataFrame(data)
         return self.dataframe
-
-    def save_to_csv(self, filename):
-        save_file = os.path.join(settings.OUTPUT_CSV_DIR, '{}_{}.csv'.format(filename, time.time()))
-        self.dataframe.to_csv(save_file, mode='w')

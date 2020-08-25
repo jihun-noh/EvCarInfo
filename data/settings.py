@@ -9,8 +9,6 @@ with open(config_file, 'r') as f:
 # Common
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 INPUT_DIR = os.path.join(BASE_DIR, config['COMMON']['DIR']['INPUT'])
-OUTPUT_CSV_DIR = os.path.join(BASE_DIR, config['COMMON']['DIR']['OUTPUT']['CSV'])
-OUTPUT_XML_DIR = os.path.join(BASE_DIR, config['COMMON']['DIR']['OUTPUT']['XML'])
 
 # DB
 REDIS_HOST = config['DATABASE']['REDIS']['HOST']
