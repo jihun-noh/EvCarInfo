@@ -5,7 +5,7 @@
 ### myApp ###
 logs/
 files/
-config.json
+*.json
 
 ### Django ###
 *.log
