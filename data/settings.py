@@ -13,6 +13,7 @@ INPUT_DIR = os.path.join(BASE_DIR, config['COMMON']['DIR']['INPUT'])
 # DB
 REDIS_HOST = config['DATABASE']['REDIS']['HOST']
 REDIS_PORT = config['DATABASE']['REDIS']['PORT']
+REDIS_PASSWORD = config['DATABASE']['REDIS']['PASSWORD']
 
 # Third Party Api settings
 DATA_GO_KR_SERVICE_KEY = config['THIRD_PARTY_API']['DATA_GO_KR']['SERVICE_KEY']
