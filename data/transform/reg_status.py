@@ -16,7 +16,8 @@ if not keys:
 keys.sort()
 for k in keys:
     key = k[k.find('2'):]
-    dict_data = {key : r.get(k)}
+    value = json.loads(r.get(k))
+    dict_data = {key : value}
     dict_datas.append(dict_data)
 
 transform_json_data = json.dumps(dict_datas)
