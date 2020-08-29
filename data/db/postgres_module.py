@@ -1,4 +1,5 @@
 from sqlalchemy import create_engine
+from .models import Car
 import settings
 
 class PostgresModule():
@@ -14,6 +15,11 @@ class PostgresModule():
         self.conn = self.engine.connect(**kargs)
         return self.conn
 
+    def create_tables(self):
+        models.create_tables(self.engine)
 
-        #     conn.close()
-        # db.dispose()
+    def show_models(self):
+        print(Car())
+
+#     conn.close()
+# db.dispose()
